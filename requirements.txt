@@ -4,3 +4,4 @@ Pillow==8.3.2
 fpdf
 nltk
 PyPDF2
+sklearn
