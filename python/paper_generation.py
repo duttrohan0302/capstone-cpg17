@@ -9,11 +9,11 @@ difficultyLevel = sys.argv[1]
 
 dataset=pd.read_csv("assets/dataset2.csv",index_col=False)  
 
-def writeToPDF(questions, topics, difficulties):
-
+def writeToPDF(topics, difficulties):
   file1 = open('output/sample_paper.json')
   questions = json.load(file1)
 
+  print("QUESTIONS ARE _____________________________",questions,"\n-----------------------------------")
   pdf = FPDF()
   
   pdf.add_page()
@@ -51,7 +51,6 @@ def difficulty(x):
         except Exception as e:
           temp=None
         if temp!=None:
-          # ans.append(temp[0].replace('\\',' '))
           ans.append(temp[0].encode("ascii", "ignore").decode())
 
           topic_list.append(topics[i])
@@ -64,10 +63,6 @@ def difficulty(x):
           break
         if itr>500:
           break
-      # ans.append(temp[0])
-      # topic_list.append(topics[i])
-      # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
     for i in range(7,10):
       t=dataset[(dataset["Difficulty"]<=10)&(dataset["Difficulty"]>=7)]
       temp=None
@@ -80,7 +75,6 @@ def difficulty(x):
           temp=None
         if temp!=None:
           ans.append(temp[0].encode("ascii", "ignore").decode())
-          # ans.append(temp[0])
           topic_list.append(topics[i])
           try:
             tt = dataset[dataset["Question"]==ans[i]]["Difficulty"]
@@ -91,20 +85,17 @@ def difficulty(x):
           break
         if itr>500:
           break
-      # ans.append(temp[0])
-      # topic_list.append(topics[i])
-      # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
-    print(ans)
-    print(topic_list)
-    print(diff_list)
+    # print(ans)
+    # print(topic_list)
+    # print(diff_list)
     json.dump(ans,open('output/sample_paper.json', 'w'))
     json.dump(diff_list,open('output/sample_paper_difficulty.json', 'w'))
     json.dump(topic_list,open('output/sample_paper_topics.json', 'w'))
-    writeToPDF(ans,topic_list,diff_list)
+    writeToPDF(topic_list,diff_list)
   elif(x.lower() == "medium"):
     ans=[]
     for i in range(0,3):
+      print("i is ",i)
       t=dataset[(dataset["Difficulty"]<=4)&(dataset["Difficulty"]>=1)]
       temp=None
       itr=0
@@ -120,23 +111,20 @@ def difficulty(x):
           try:
             tt = dataset[dataset["Question"]==ans[i]]["Difficulty"]
             diff_list.append(tt.item())
-            # print("NORMAL CASE IS ",tt," and ",tt.item(),"\n--------------") 
 
           except Exception as err:
             diff_list.append(3)
             print("EXCEPTION IS ",tt,"\n--------------") 
-          # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
           break
         if itr>500:
           break
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
     for i in range(3,7):
+      print("i is ",i)
       t=dataset[(dataset["Difficulty"]<=6)&(dataset["Difficulty"]>=5)]
       temp=None
       itr=0
       while temp==None:
         itr=itr+1
-        print(itr)
         try:
           temp = t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values
         except Exception as e:
@@ -153,13 +141,12 @@ def difficulty(x):
             print("EXCEPTION IS ",tt,"\n--------------") 
             diff_list.append(6)
 
-          # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
           break
         if itr>500:
           break
 
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
     for i in range(7,10):
+      print("i is ",i)
       t=dataset[(dataset["Difficulty"]<=10)&(dataset["Difficulty"]>=7)]
       temp=None
       itr=0
@@ -178,18 +165,17 @@ def difficulty(x):
           except Exception as err:
             print("EXCEPTION IS ",tt,"\n--------------") 
             diff_list.append(9)
-          # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
           break
         if itr>500:
           break
       
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
     # print(ans)
-    print(topic_list)
-    print(diff_list)
+    # print(topic_list)
+    # print(diff_list)
     json.dump(ans,open('output/sample_paper.json', 'w'))
     json.dump(diff_list,open('output/sample_paper_difficulty.json', 'w'))
     json.dump(topic_list,open('output/sample_paper_topics.json', 'w'))
+    writeToPDF(topic_list,diff_list)
   elif(x.lower() == "hard"):
     ans=[]
     for i in range(0,3):
@@ -208,7 +194,6 @@ def difficulty(x):
           try:
             tt = dataset[dataset["Question"]==ans[i]]["Difficulty"]
             diff_list.append(tt.item())
-            # print("NORMAL CASE IS ",tt," and ",tt.item(),"\n--------------") 
 
           except Exception as err:
             diff_list.append(5)
@@ -216,10 +201,6 @@ def difficulty(x):
           break
         if itr>500:
           break
-      # ans.append(temp[0])
-      # topic_list.append(topics[i])
-      # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
     for i in range(3,10):
       t=dataset[(dataset["Difficulty"]<=10)&(dataset["Difficulty"]>=7)]
       temp=None
@@ -242,16 +223,13 @@ def difficulty(x):
           break
         if itr>500:
           break
-      # ans.append(temp[0])
-      # topic_list.append(topics[i])
-      # diff_list.append(dataset[dataset["Question"]==ans[i]]["Difficulty"].item())
-      # ans.append(t[t["Topic"]==topics[i]].sample(n=1,replace=False)["Question"].values[0])
     # print(ans)
-    print(topic_list)
-    print(diff_list)
+    # print(topic_list)
+    # print(diff_list)
     json.dump(ans,open('output/sample_paper.json', 'w'))
     json.dump(diff_list,open('output/sample_paper_difficulty.json', 'w'))
     json.dump(topic_list,open('output/sample_paper_topics.json', 'w'))
+    writeToPDF(topic_list,diff_list)
   else:
     print("Enter a valid choice")
 
