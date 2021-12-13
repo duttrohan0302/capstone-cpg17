@@ -24,7 +24,7 @@ function SamplePaperGenerationPage() {
 
 
     try{
-      const response = await axios(`http://localhost:5000/generate/${difficulty}`,{
+      const response = await axios(`/generate/${difficulty}`,{
         method: "GET",
         responseType: "blob"
       })

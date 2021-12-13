@@ -15,7 +15,7 @@ function AnalysisPage() {
   useEffect(() => {
 
     const viewHandler = async () => {
-      axios('http://localhost:5000/analysed-paper', {
+      axios('/analysed-paper', {
         method: "GET",
         responseType: "blob"
       })

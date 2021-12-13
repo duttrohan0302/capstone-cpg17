@@ -1,3 +1,6 @@
 numpy==1.19.3
+pandas
 Pillow==8.3.2
-requests
+fpdf
+nltk
+PyPDF2

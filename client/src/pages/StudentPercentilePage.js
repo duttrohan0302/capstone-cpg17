@@ -9,7 +9,7 @@ function StudentPercentilePage() {
   useEffect(()=>{
     const getPercentiles = async () =>{
       try{
-        const data = await axios.get("http://localhost:5000/percentile")
+        const data = await axios.get("/percentile")
 
         setPercentiles(data.data.percentiles)
       }catch(err){

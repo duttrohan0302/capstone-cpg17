@@ -1,8 +1,5 @@
 const { spawn } = require('child_process')
-// const { v4 : uuid } = require('uuid')
-const pdf2base64 = require('pdf-to-base64');
 const fs = require("fs");
-const { resolveSoa } = require('dns');
 
 exports.check = async (req, res, next) => {
     return res.status(200).json({ msg: "Working" })
@@ -23,24 +20,38 @@ exports.getPaper = async (req, res, next) => {
 }
 
 exports.percentile = async function (req, res, next) {
-    const difficulty = require('../output/difficulty.json')
 
-    const avgDiff = difficulty.reduce((total, num) => total + num) / 10;
-    const python = spawn('python', ['python/percentile.py', avgDiff])
 
-    var outputTemp = []
+    var difficulty = []
 
-    python.stdout.on('data', function (data) {
-        console.log('Pipe data from python script ...')
-        // console.log(data.toString())
-        outputTemp += data.toString();
+    const diff = spawn('python', ['python/jsonReadWrite.py', 'output/difficulty.json'])
+    var temp1 = [], temp2 = [];
+    diff.stdout.on('data', function (data) {
+        temp1 += data.toString()
+        console.log(data.toString())
     })
-    python.stdout.on('close', function (code) {
-        console.log('Closed with code ', code)
-        // console.log("Output is", outputTemp)
-        const percentile = JSON.parse(outputTemp)
-        return res.status(200).json({ msg: "Done", percentiles: percentile })
+
+    diff.stdout.on('close', function (data) {
+        difficulty = JSON.parse(temp1)
+
+        const avgDiff = difficulty.reduce((total, num) => total + num) / 10;
+
+        const python = spawn('python', ['python/percentile.py', avgDiff])
+    
+        var outputTemp = []
+    
+        python.stdout.on('data', function (data) {
+            console.log('Pipe data from python script ...')
+            // console.log(data.toString())
+            outputTemp += data.toString();
+        })
+        python.stdout.on('close', function (code) {
+            console.log('Closed with code ', code)
+            const percentile = JSON.parse(outputTemp)
+            return res.status(200).json({ msg: "Done", percentiles: percentile })
+        })
     })
+
 
 }
 exports.analytics = async function (req, res, next) {

@@ -14,7 +14,7 @@ function ContentUploading(props) {
     formData.append("upload", pdfFile)
 
     try {
-      const response = await axios.post("http://localhost:5000/analyse", formData, {
+      const response = await axios.post("/analyse", formData, {
         headers: {
           "Content-type": "multipart/form-data",
         }

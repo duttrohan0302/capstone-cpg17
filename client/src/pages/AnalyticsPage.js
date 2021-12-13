@@ -56,7 +56,7 @@ function AnalyticsPage() {
     const getAnalytics = async () => {
 
       try {
-        const data = await axios.get("http://localhost:5000/analytics")
+        const data = await axios.get("/analytics")
         setDifficultyWise(data.data.difficultyWise)
         setTopicWise(data.data.topicWise)
       } catch (error) {
