@@ -52,9 +52,9 @@ function SamplePaperGenerationPage() {
             <label htmlFor="Subject">Select Subject</label>
             <select id="Subject" name="Subject">
               <option value="DSA">Data Structures and Algorithms</option>
-              <option value="OS">Operating Systems</option>
+              {/* <option value="OS">Operating Systems</option>
               <option value="CN">Computer Networks</option>
-              <option value="DBMS">DataBase Management Systems</option>
+              <option value="DBMS">DataBase Management Systems</option> */}
             </select>
           </div>
           <div className={classes.control}>
