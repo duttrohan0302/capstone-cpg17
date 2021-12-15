@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
+import Icon from "./favicon.png";
 
 function AnalysisNavigation() {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <Link to="/">EXAM IDEA</Link>
+        <Link to="/">
+          <img src={Icon} alt="" width={100}/>
+          </Link>
       </div>
       <nav>
         <ul>
